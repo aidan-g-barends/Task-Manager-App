@@ -9,8 +9,7 @@ import java.time.LocalDate;
 public class TaskFactory {
 
     public static Task createTask(Long id, String title, boolean completed, LocalDate dueDate, User user){
-
-        if(Helper.isNullOrEmpty(title) || Helper.isValidDate(dueDate)){
+        if(Helper.isNullOrEmpty(title) || !Helper.isValidDate(dueDate)){
 
             return null;
         }

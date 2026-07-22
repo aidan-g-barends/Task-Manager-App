@@ -16,7 +16,7 @@ public class User {
 
     protected User(){}
 
-    private User (Builder  builder){
+    private User(Builder builder){
         this.name = builder.name;
         this.email = builder.email;
         this.id = builder.id;
