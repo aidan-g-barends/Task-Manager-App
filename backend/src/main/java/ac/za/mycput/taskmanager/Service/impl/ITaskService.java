@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ITaskService extends IService<Task, Long> {
 
-    Task findByTitle(String title);
+    List<Task> findByTitle(String title);
 
     List<Task> findByUser(User user);
 

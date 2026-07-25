@@ -19,7 +19,6 @@ public class TaskService implements ITaskService {
         this.taskRepository = taskRepository;
     }
 
-
     @Override
     public Task create(Task task) {
         return taskRepository.save(task);
@@ -38,29 +37,30 @@ public class TaskService implements ITaskService {
         }
         Task updated = new Task.Builder()
                 .copy(existing)
-                .setDueDate(task.getDueDate())
                 .setTitle(task.getTitle())
+                .setCompleted(task.isCompleted())
+                .setDueDate(task.getDueDate())
+                .setUser(task.getUser())
                 .build();
         return this.taskRepository.save(updated);
     }
 
     @Override
     public boolean delete(Long id) {
-        if(!taskRepository.existsById(id)){
+        if (!taskRepository.existsById(id)) {
             return false;
-        }taskRepository.deleteById(id);
+        }
+        taskRepository.deleteById(id);
         return true;
     }
 
     @Override
-    public Task findByTitle(String title)
-    {
+    public List<Task> findByTitle(String title) {
         return taskRepository.findByTitle(title);
     }
 
     @Override
-    public List<Task> findByUser(User user)
-    {
+    public List<Task> findByUser(User user) {
         return taskRepository.findByUser(user);
     }
 
@@ -69,4 +69,3 @@ public class TaskService implements ITaskService {
         return taskRepository.findAll();
     }
 }
-
