@@ -34,7 +34,11 @@ public class UserService implements IUserService {
         if(existing == null){
             return null;
         }
-        User updated = new User.Builder().copy(existing).build();
+        User updated = new User.Builder()
+                .copy(existing)
+                .setName(user.getName())
+                .setEmail(user.getEmail())
+                .build();
         return userRepository.save(updated);
     }
 

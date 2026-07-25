@@ -36,7 +36,11 @@ public class TaskService implements ITaskService {
         if (existing == null) {
             return null;
         }
-        Task updated = new Task.Builder().copy(existing).build();
+        Task updated = new Task.Builder()
+                .copy(existing)
+                .setDueDate(task.getDueDate())
+                .setTitle(task.getTitle())
+                .build();
         return this.taskRepository.save(updated);
     }
 
