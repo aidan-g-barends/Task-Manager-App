@@ -65,6 +65,11 @@ public class TaskService implements ITaskService {
     }
 
     @Override
+    public List<Task> findByUserId(Long userId) {
+        return taskRepository.findByUserId(userId);
+    }
+
+    @Override
     public List<Task> getAll() {
         return taskRepository.findAll();
     }

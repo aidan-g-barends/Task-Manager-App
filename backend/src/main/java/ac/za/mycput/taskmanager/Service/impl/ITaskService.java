@@ -11,6 +11,8 @@ public interface ITaskService extends IService<Task, Long> {
 
     List<Task> findByUser(User user);
 
+    List <Task> findByUserId(Long userId);
+
     List<Task> getAll();
 
 }
