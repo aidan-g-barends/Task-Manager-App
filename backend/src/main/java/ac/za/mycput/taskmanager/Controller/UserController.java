@@ -2,6 +2,7 @@ package ac.za.mycput.taskmanager.Controller;
 
 
 import ac.za.mycput.taskmanager.Domain.User;
+import ac.za.mycput.taskmanager.Service.UserService;
 import ac.za.mycput.taskmanager.Service.impl.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
-    private IUserService userService;
+    private final IUserService userService;
 
     @Autowired
-    UserController(UserController userController){
+    UserController(IUserService userService){
         this.userService = userService;
     }
 
@@ -23,18 +24,25 @@ public class UserController {
     public User create(@RequestBody User user){
         return userService.create(user);
     }
+
+
+
     @GetMapping("/read/{id}")
     public User read(@PathVariable Long id){
         return userService.read(id);
     }
+
+
     @PutMapping("/update")
     public User update(@RequestBody User user){
         return userService.update(user);
     }
+
+
     @DeleteMapping("/delete/{id}")
     public boolean delete(@PathVariable Long id){
-        userService.delete(id);
-        return false;
+        return userService.delete(id);
+
     }
 
     @GetMapping("/email/{email}")
