@@ -2,6 +2,7 @@ package ac.za.mycput.taskmanager.Controller;
 
 import ac.za.mycput.taskmanager.Domain.Task;
 import ac.za.mycput.taskmanager.Service.TaskService;
+import ac.za.mycput.taskmanager.Service.impl.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +12,10 @@ import java.util.List;
 @RequestMapping("/api/task")
 public class TaskController {
 
-    private final TaskService taskService;
+    private final ITaskService taskService;
 
     @Autowired
-    public TaskController(TaskService taskService){
+    public TaskController(ITaskService taskService){
         this.taskService = taskService;
     }
 
