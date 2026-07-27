@@ -4,9 +4,11 @@ import ac.za.mycput.taskmanager.Domain.User;
 import ac.za.mycput.taskmanager.Repository.UserRepository;
 import ac.za.mycput.taskmanager.Service.impl.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserService implements IUserService {
 
     private UserRepository userRepository;
