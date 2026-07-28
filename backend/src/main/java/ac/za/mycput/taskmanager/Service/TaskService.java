@@ -2,6 +2,7 @@ package ac.za.mycput.taskmanager.Service;
 
 import ac.za.mycput.taskmanager.Domain.Task;
 import ac.za.mycput.taskmanager.Domain.User;
+import ac.za.mycput.taskmanager.Exception.ResourceNotFoundException;
 import ac.za.mycput.taskmanager.Repository.TaskRepository;
 import ac.za.mycput.taskmanager.Service.impl.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,8 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task read(Long id) {
-        return taskRepository.findById(id).get();
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task with id: " + id + " not found"));
     }
 
     @Override

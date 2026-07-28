@@ -1,6 +1,7 @@
 package ac.za.mycput.taskmanager.Service;
 
 import ac.za.mycput.taskmanager.Domain.User;
+import ac.za.mycput.taskmanager.Exception.ResourceNotFoundException;
 import ac.za.mycput.taskmanager.Repository.UserRepository;
 import ac.za.mycput.taskmanager.Service.impl.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ public class UserService implements IUserService {
     @Override
     public User read(Long id) {
 
-        return userRepository.findById(id).get();
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Users with id: " + id + " not found"));
     }
 
     @Override
