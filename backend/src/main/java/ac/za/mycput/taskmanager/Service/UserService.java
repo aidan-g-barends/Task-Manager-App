@@ -2,6 +2,7 @@ package ac.za.mycput.taskmanager.Service;
 
 import ac.za.mycput.taskmanager.Domain.User;
 import ac.za.mycput.taskmanager.Exception.ResourceNotFoundException;
+import ac.za.mycput.taskmanager.Factory.UserFactory;
 import ac.za.mycput.taskmanager.Repository.UserRepository;
 import ac.za.mycput.taskmanager.Service.impl.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,8 @@ public class UserService implements IUserService {
     @Override
     public User create(User user) {
 
-        return userRepository.save(user);
+        User newUser = UserFactory.createUser(user.getName(), user.getEmail(), null);
+        return userRepository.save(newUser);
     }
 
     @Override

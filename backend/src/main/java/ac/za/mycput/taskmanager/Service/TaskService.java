@@ -3,6 +3,7 @@ package ac.za.mycput.taskmanager.Service;
 import ac.za.mycput.taskmanager.Domain.Task;
 import ac.za.mycput.taskmanager.Domain.User;
 import ac.za.mycput.taskmanager.Exception.ResourceNotFoundException;
+import ac.za.mycput.taskmanager.Factory.TaskFactory;
 import ac.za.mycput.taskmanager.Repository.TaskRepository;
 import ac.za.mycput.taskmanager.Service.impl.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,9 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task create(Task task) {
-        return taskRepository.save(task);
+
+        Task newTask = TaskFactory.createTask(null, task.getTitle(), task.isCompleted(),  task.getDueDate() , task.getUser());
+        return taskRepository.save(newTask);
     }
 
     @Override
