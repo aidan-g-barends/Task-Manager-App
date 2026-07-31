@@ -7,6 +7,8 @@ import ac.za.mycput.taskmanager.Factory.TaskFactory;
 import ac.za.mycput.taskmanager.Repository.TaskRepository;
 import ac.za.mycput.taskmanager.Service.impl.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -77,5 +79,10 @@ public class TaskService implements ITaskService {
     @Override
     public List<Task> getAll() {
         return taskRepository.findAll();
+    }
+
+    @Override
+    public Page<Task> getAll(Pageable pageable) {
+        return taskRepository.findAll(pageable);
     }
 }
