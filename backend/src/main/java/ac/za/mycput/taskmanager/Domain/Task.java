@@ -1,6 +1,8 @@
 package ac.za.mycput.taskmanager.Domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 
@@ -10,8 +12,13 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = " Title cannot be blank")
     private String title;
+
     private boolean completed;
+
+    @Future(message = "Due date must be in the future")
     private LocalDate dueDate;
 
     @ManyToOne
