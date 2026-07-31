@@ -1,13 +1,21 @@
 package ac.za.mycput.taskmanager.Domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
 public class User {
 
+    @NotBlank(message = "Name cannot be blank")
     private String name;
+
+
+    @NotBlank(message = "Email cannot be blank")
+    @Email(message = "Email must be a valid email address")
     private String email;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
