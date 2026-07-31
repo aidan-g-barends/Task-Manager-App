@@ -3,6 +3,7 @@ package ac.za.mycput.taskmanager.Controller;
 import ac.za.mycput.taskmanager.Domain.Task;
 import ac.za.mycput.taskmanager.Service.TaskService;
 import ac.za.mycput.taskmanager.Service.impl.ITaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public Task create(@RequestBody Task task){
+    public Task create(@Valid @RequestBody Task task){
         return taskService.create(task);
     }
 
@@ -30,7 +31,7 @@ public class TaskController {
     }
 
     @PutMapping("/update")
-    public Task update(@RequestBody Task task){
+    public Task update(@Valid @RequestBody Task task){
         return taskService.update(task);
     }
 
