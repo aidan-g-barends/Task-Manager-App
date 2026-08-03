@@ -18,7 +18,7 @@ public class Task {
 
     private boolean completed;
 
-    private int Loggin;
+
 
     @Future(message = "Due date must be in the future")
     private LocalDate dueDate;
