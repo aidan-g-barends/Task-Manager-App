@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { TaskService, Task } from '../../services/task';
 
 @Component({
   selector: 'app-task-list',
@@ -6,10 +7,14 @@ import { Component, signal } from '@angular/core';
   templateUrl: './task-list.html',
   styleUrl: './task-list.css',
 })
-export class TaskList {
-  protected readonly tasks = signal([
-    { title: 'Learn Angular basics', completed: false },
-    { title: 'Connect frontend to backend', completed: false },
-    { title: 'Build task list UI', completed: true },
-  ]);
+export class TaskList implements OnInit {
+  protected readonly tasks = signal<Task[]>([]);
+
+  constructor(private taskService: TaskService) {}
+
+  ngOnInit(): void {
+    this.taskService.getAll().subscribe((data) => {
+      this.tasks.set(data);
+    });
+  }
 }
