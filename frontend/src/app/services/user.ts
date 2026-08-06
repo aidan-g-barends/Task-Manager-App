@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 export interface User {
   id: number;
   name: string;
   email: string;
+}
+
+interface PageResponse<T> {
+  content: T[];
 }
 
 @Injectable({
@@ -17,7 +21,9 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/getAll`);
+    return this.http.get<PageResponse<User>>(`${this.apiUrl}/getAll`).pipe(
+      map((response) => response.content)
+    );
   }
 
   create(user: Partial<User>): Observable<User> {

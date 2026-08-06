@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 export interface Task {
   id: number;
   title: string;
   completed: boolean;
   dueDate: string;
-  user?: { id: number };
+  user?: { id: number; name?: string; email?: string } | null;
+}
+
+interface PageResponse<T> {
+  content: T[];
 }
 
 @Injectable({
@@ -19,7 +23,9 @@ export class TaskService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Task[]> {
-    return this.http.get<Task[]>(`${this.apiUrl}/getAll`);
+    return this.http.get<PageResponse<Task>>(`${this.apiUrl}/getAll`).pipe(
+      map((response) => response.content)
+    );
   }
 
   create(task: Partial<Task>): Observable<Task> {
@@ -27,6 +33,6 @@ export class TaskService {
   }
 
   delete(id: number): Observable<boolean> {
-  return this.http.delete<boolean>(`${this.apiUrl}/delete/${id}`);
-}
+    return this.http.delete<boolean>(`${this.apiUrl}/delete/${id}`);
+  }
 }
