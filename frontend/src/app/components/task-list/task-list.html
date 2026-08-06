@@ -1,6 +1,25 @@
-<h2>Tasks</h2>
-<ul>
-  @for (task of tasks(); track task.title) {
-    <li>{{ task.title }} — {{ task.completed ? 'Done' : 'Pending' }}</li>
-  }
-</ul>
+<div class="max-w-4xl mx-auto p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-semibold text-gray-900">All Tasks</h2>
+  </div>
+
+  <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+    @for (task of tasks(); track task.id) {
+      <div class="flex items-center gap-4 p-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors"
+           [class.opacity-60]="task.completed">
+        <input type="checkbox" [checked]="task.completed"
+               class="w-5 h-5 rounded border-gray-300 text-blue-600" />
+        <div class="flex-1">
+          <h4 class="text-base font-medium text-gray-900" [class.line-through]="task.completed">
+            {{ task.title }}
+          </h4>
+        </div>
+        <span class="px-2.5 py-1 rounded-md bg-gray-100 text-gray-600 text-xs font-medium">
+          {{ task.dueDate }}
+        </span>
+      </div>
+    } @empty {
+      <div class="p-8 text-center text-gray-500">No tasks yet.</div>
+    }
+  </div>
+</div>
