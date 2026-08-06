@@ -7,6 +7,7 @@ export interface Task {
   title: string;
   completed: boolean;
   dueDate: string;
+  user?: { id: number };
 }
 
 @Injectable({
@@ -19,5 +20,9 @@ export class TaskService {
 
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(`${this.apiUrl}/getAll`);
+  }
+
+  create(task: Partial<Task>): Observable<Task> {
+    return this.http.post<Task>(`${this.apiUrl}/create`, task);
   }
 }
