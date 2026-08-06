@@ -21,4 +21,10 @@ export class TaskList implements OnInit {
       this.tasks.set(data);
     });
   }
+
+  deleteTask(id: number): void {
+    this.taskService.delete(id).subscribe(() => {
+      this.refresh();
+    });
+  }
 }

@@ -1,4 +1,34 @@
-<h1 class="text-3xl font-bold text-center mt-6 mb-4">Task Manager</h1>
-<app-task-form (taskCreated)="onTaskCreated()"></app-task-form>
-<app-task-list #taskList></app-task-list>
-<app-user-list></app-user-list>
+<div class="flex h-screen bg-gray-50">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col py-6 px-4 fixed h-full">
+    <div class="mb-8 px-2">
+      <h1 class="text-xl font-bold text-blue-700">Task Manager</h1>
+      <p class="text-xs text-gray-500">Productivity Workspace</p>
+    </div>
+    <nav class="flex-1 space-y-1">
+      <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-50 text-blue-700 font-medium">
+        All Tasks
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100">
+        Users
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <div class="ml-64 flex-1 flex flex-col">
+    <!-- Top nav -->
+    <header class="h-16 bg-white border-b border-gray-200 flex items-center px-6 sticky top-0 z-10">
+      <h2 class="text-lg font-semibold text-gray-800">Workspace</h2>
+    </header>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto p-6">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <app-task-form (taskCreated)="onTaskCreated()"></app-task-form>
+        <app-task-list #taskList></app-task-list>
+        <app-user-list></app-user-list>
+      </div>
+    </main>
+  </div>
+</div>
