@@ -13,6 +13,10 @@ export class TaskList implements OnInit {
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
+    this.refresh();
+  }
+
+  refresh(): void {
     this.taskService.getAll().subscribe((data) => {
       this.tasks.set(data);
     });
