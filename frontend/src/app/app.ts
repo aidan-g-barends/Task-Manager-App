@@ -1,11 +1,12 @@
-import { Routes } from '@angular/router';
-import { TaskList } from './components/task-list/task-list';
-import { TaskForm } from './components/task-form/task-form';
-import { UserList } from './components/user-list/user-list';
+import { Component, signal } from '@angular/core';
+import { RouterOutlet, RouterLink } from '@angular/router';
 
-export const routes: Routes = [
-  { path: '', component: TaskList },
-  { path: 'completed', component: TaskList, data: { completedOnly: true } },
-  { path: 'tasks/new', component: TaskForm },
-  { path: 'users', component: UserList },
-];
+@Component({
+  selector: 'app-root',
+  imports: [RouterOutlet, RouterLink],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
+})
+export class App {
+  protected readonly title = signal('frontend');
+}

@@ -5,6 +5,7 @@ import { UserList } from './components/user-list/user-list';
 
 export const routes: Routes = [
   { path: '', component: TaskList },
+  { path: 'completed', component: TaskList, data: { completedOnly: true } },
   { path: 'tasks/new', component: TaskForm },
   { path: 'users', component: UserList },
 ];
