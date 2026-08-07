@@ -16,7 +16,9 @@ export class App implements OnInit {
 
   protected readonly dueOrOverdue = computed(() => {
     const today = new Date().toISOString().split('T')[0];
-    return this.allTasks().filter((t) => !t.completed && t.dueDate <= today);
+    return this.allTasks()
+      .filter((t) => !t.completed && t.dueDate <= today)
+      .sort((a, b) => a.dueDate.localeCompare(b.dueDate));
   });
 
   constructor(private taskService: TaskService) {}
