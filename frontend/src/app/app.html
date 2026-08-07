@@ -14,7 +14,8 @@
     </button>
 
     <nav class="flex-1 space-y-1">
-      <a routerLink="/" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-50 text-blue-700 font-semibold text-sm">
+      <a routerLink="/" routerLinkActive="bg-blue-50 text-blue-700 font-semibold" [routerLinkActiveOptions]="{exact: true}"
+         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-100 text-sm">
         <span class="material-symbols-outlined text-xl">assignment</span>
         All Tasks
       </a>
@@ -22,11 +23,13 @@
         <span class="material-symbols-outlined text-xl">person_check</span>
         My Tasks
       </a>
-      <a routerLink="/completed" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-100 text-sm">
+      <a routerLink="/completed" routerLinkActive="bg-blue-50 text-blue-700 font-semibold"
+         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-100 text-sm">
         <span class="material-symbols-outlined text-xl">check_circle</span>
         Completed
       </a>
-      <a routerLink="/users" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-100 text-sm">
+      <a routerLink="/users" routerLinkActive="bg-blue-50 text-blue-700 font-semibold"
+         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-100 text-sm">
         <span class="material-symbols-outlined text-xl">group</span>
         Users
       </a>
