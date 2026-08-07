@@ -31,6 +31,12 @@ export class TaskList implements OnInit {
     });
   }
 
+  toggleComplete(task: Task): void {
+    this.taskService.update(task.id, { completed: !task.completed }).subscribe(() => {
+      this.refresh();
+    });
+  }
+
   deleteTask(id: number): void {
     this.taskService.delete(id).subscribe(() => {
       this.refresh();
