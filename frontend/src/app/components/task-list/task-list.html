@@ -7,7 +7,7 @@
   <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
     @for (task of tasks(); track task.id) {
       <div class="flex items-center gap-4 p-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors">
-        <input type="checkbox" [checked]="task.completed"
+        <input type="checkbox" [checked]="task.completed" (change)="toggleComplete(task)"
                class="w-5 h-5 rounded border-gray-300 text-blue-600 cursor-pointer" />
         <div class="flex-1">
           <h4 class="font-medium text-gray-900" [class.line-through]="task.completed" [class.text-gray-400]="task.completed">
