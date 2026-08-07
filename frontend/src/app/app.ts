@@ -2,6 +2,11 @@ import { Component, signal, computed, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { TaskService, Task } from './services/task';
 
+interface TaskNotification {
+  task: Task;
+  label: string;
+}
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
@@ -14,11 +19,26 @@ export class App implements OnInit {
   private readonly allTasks = signal<Task[]>([]);
   protected readonly showNotifications = signal(false);
 
-  protected readonly dueOrOverdue = computed(() => {
-    const today = new Date().toISOString().split('T')[0];
+  private readonly daysAhead = 3; // show tasks due within the next 3 days too
+
+  protected readonly notifications = computed<TaskNotification[]>(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     return this.allTasks()
-      .filter((t) => !t.completed && t.dueDate <= today)
-      .sort((a, b) => a.dueDate.localeCompare(b.dueDate));
+      .filter((t) => !t.completed)
+      .map((t) => {
+        const due = new Date(t.dueDate);
+        due.setHours(0, 0, 0, 0);
+        const diffDays = Math.round((due.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+        return { task: t, diffDays };
+      })
+      .filter((t) => t.diffDays <= this.daysAhead)
+      .sort((a, b) => a.diffDays - b.diffDays)
+      .map(({ task, diffDays }) => ({
+        task,
+        label: this.formatDueLabel(diffDays),
+      }));
   });
 
   constructor(private taskService: TaskService) {}
@@ -29,5 +49,15 @@ export class App implements OnInit {
 
   toggleNotifications(): void {
     this.showNotifications.update((v) => !v);
+  }
+
+  private formatDueLabel(diffDays: number): string {
+    if (diffDays < 0) {
+      return `Overdue by ${Math.abs(diffDays)} day${Math.abs(diffDays) === 1 ? '' : 's'}`;
+    }
+    if (diffDays === 0) {
+      return 'Due today';
+    }
+    return `Due in ${diffDays} day${diffDays === 1 ? '' : 's'}`;
   }
 }
