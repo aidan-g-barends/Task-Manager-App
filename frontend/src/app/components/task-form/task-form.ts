@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TaskService } from '../../services/task';
 
 @Component({
@@ -9,11 +10,9 @@ import { TaskService } from '../../services/task';
   styleUrl: './task-form.css',
 })
 export class TaskForm {
-  @Output() taskCreated = new EventEmitter<void>();
-
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private taskService: TaskService) {
+  constructor(private fb: FormBuilder, private taskService: TaskService, private router: Router) {
     this.form = this.fb.group({
       title: ['', Validators.required],
       dueDate: ['', Validators.required],
@@ -28,7 +27,7 @@ export class TaskForm {
 
     this.taskService.create(this.form.value).subscribe(() => {
       this.form.reset({ completed: false });
-      this.taskCreated.emit();
+      this.router.navigate(['/']);
     });
   }
 }
