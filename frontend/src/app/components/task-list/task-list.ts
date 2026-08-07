@@ -1,4 +1,5 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TaskService, Task } from '../../services/task';
 
 @Component({
@@ -8,17 +9,25 @@ import { TaskService, Task } from '../../services/task';
   styleUrl: './task-list.css',
 })
 export class TaskList implements OnInit {
-  protected readonly tasks = signal<Task[]>([]);
+  private readonly allTasks = signal<Task[]>([]);
+  private readonly completedOnly = signal<boolean>(false);
 
-  constructor(private taskService: TaskService) {}
+  protected readonly tasks = computed(() =>
+    this.completedOnly()
+      ? this.allTasks().filter((t) => t.completed)
+      : this.allTasks()
+  );
+
+  constructor(private taskService: TaskService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.completedOnly.set(this.route.snapshot.data['completedOnly'] === true);
     this.refresh();
   }
 
   refresh(): void {
     this.taskService.getAll().subscribe((data) => {
-      this.tasks.set(data);
+      this.allTasks.set(data);
     });
   }
 
