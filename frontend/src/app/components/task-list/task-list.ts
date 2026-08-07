@@ -10,13 +10,19 @@ import { TaskService, Task } from '../../services/task';
 })
 export class TaskList implements OnInit {
   private readonly allTasks = signal<Task[]>([]);
-  private readonly completedOnly = signal<boolean>(false);
+  private readonly completedOnly = signal<boolean>(false
+    
+  );
 
   protected readonly tasks = computed(() =>
     this.completedOnly()
       ? this.allTasks().filter((t) => t.completed)
       : this.allTasks()
   );
+
+  protected readonly heading = computed(() =>
+  this.completedOnly() ? 'Completed Tasks' : 'All Tasks'
+);
 
   constructor(private taskService: TaskService, private route: ActivatedRoute) {}
 
