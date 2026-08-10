@@ -10,9 +10,7 @@ import { TaskService, Task } from '../../services/task';
 })
 export class TaskList implements OnInit {
   private readonly allTasks = signal<Task[]>([]);
-  private readonly completedOnly = signal<boolean>(false
-    
-  );
+  private readonly completedOnly = signal<boolean>(false);
 
   protected readonly tasks = computed(() =>
     this.completedOnly()
@@ -21,8 +19,8 @@ export class TaskList implements OnInit {
   );
 
   protected readonly heading = computed(() =>
-  this.completedOnly() ? 'Completed Tasks' : 'All Tasks'
-);
+    this.completedOnly() ? 'Completed Tasks' : 'All Tasks'
+  );
 
   constructor(private taskService: TaskService, private route: ActivatedRoute) {}
 
@@ -38,10 +36,10 @@ export class TaskList implements OnInit {
   }
 
   toggleComplete(task: Task): void {
-  this.taskService.update({ ...task, completed: !task.completed }).subscribe(() => {
-    this.refresh();
-  });
-}
+    this.taskService.update({ ...task, completed: !task.completed }).subscribe(() => {
+      this.refresh();
+    });
+  }
 
   deleteTask(id: number): void {
     this.taskService.delete(id).subscribe(() => {
