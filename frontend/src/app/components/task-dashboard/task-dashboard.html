@@ -1,1 +1,4 @@
-<p>task-dashboard works!</p>
+<div class="max-w-4xl mx-auto space-y-8">
+  <app-task-form (taskCreated)="onTaskCreated()"></app-task-form>
+  <app-task-list #taskList></app-task-list>
+</div>
