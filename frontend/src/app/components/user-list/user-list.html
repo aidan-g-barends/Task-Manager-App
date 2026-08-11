@@ -1,5 +1,14 @@
-<div class="max-w-4xl mx-auto p-6">
-  <h2 class="text-2xl font-semibold text-gray-900 mb-6">Users</h2>
+<div>
+  <div class="flex justify-between items-end mb-4">
+    <div>
+      <h2 class="text-2xl font-bold text-gray-900">Users</h2>
+      <p class="text-sm text-gray-500 mt-1">Manage team access.</p>
+    </div>
+    <a routerLink="/users/new"
+       class="bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+      + New User
+    </a>
+  </div>
 
   <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
     @for (user of users(); track user.id) {
@@ -11,6 +20,12 @@
           <p class="font-medium text-gray-900">{{ user.name }}</p>
           <p class="text-sm text-gray-500">{{ user.email }}</p>
         </div>
+        <a [routerLink]="['/users', user.id, 'edit']" class="text-gray-400 hover:text-blue-600 transition-colors">
+          <span class="material-symbols-outlined text-lg">edit</span>
+        </a>
+        <button (click)="deleteUser(user.id)" class="text-gray-400 hover:text-red-600 transition-colors">
+          <span class="material-symbols-outlined text-lg">delete</span>
+        </button>
       </div>
     } @empty {
       <div class="p-8 text-center text-gray-500">No users yet.</div>

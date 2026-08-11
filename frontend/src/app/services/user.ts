@@ -26,7 +26,19 @@ export class UserService {
     );
   }
 
+  getById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/read/${id}`);
+  }
+
   create(user: Partial<User>): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/create`, user);
+  }
+
+  update(user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/update`, user);
+  }
+
+  delete(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.apiUrl}/delete/${id}`);
   }
 }
