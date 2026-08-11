@@ -21,6 +21,9 @@
               [class.text-green-700]="task.completed">
           {{ task.completed ? 'Done' : task.dueDate }}
         </span>
+        <a [routerLink]="['/tasks', task.id, 'edit']" class="text-gray-400 hover:text-blue-600 transition-colors">
+          <span class="material-symbols-outlined text-lg">edit</span>
+        </a>
         <button (click)="deleteTask(task.id)" class="text-gray-400 hover:text-red-600 transition-colors">
           <span class="material-symbols-outlined text-lg">delete</span>
         </button>

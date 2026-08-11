@@ -39,4 +39,8 @@ export class TaskService {
   delete(id: number): Observable<boolean> {
     return this.http.delete<boolean>(`${this.apiUrl}/delete/${id}`);
   }
+
+  getById(id: number): Observable<Task> {
+  return this.http.get<Task>(`${this.apiUrl}/read/${id}`);
+}
 }

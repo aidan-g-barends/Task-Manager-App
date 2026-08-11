@@ -7,5 +7,6 @@ export const routes: Routes = [
   { path: '', component: TaskList },
   { path: 'completed', component: TaskList, data: { completedOnly: true } },
   { path: 'tasks/new', component: TaskForm },
+  { path: 'tasks/:id/edit', component: TaskForm },
   { path: 'users', component: UserList },
 ];

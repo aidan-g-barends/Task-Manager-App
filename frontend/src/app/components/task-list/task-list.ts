@@ -1,10 +1,11 @@
 import { Component, OnInit, signal, computed } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TaskService, Task } from '../../services/task';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './task-list.html',
   styleUrl: './task-list.css',
 })
