@@ -1,0 +1,62 @@
+@if (task(); as t) {
+  <div>
+    <a routerLink="/" class="text-sm text-gray-500 hover:text-gray-800 flex items-center gap-1 mb-4">
+      <span class="material-symbols-outlined text-base">chevron_left</span>
+      All Tasks
+    </a>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 bg-white border border-gray-200 rounded-xl p-8 shadow-sm">
+        <div class="flex items-start justify-between mb-6">
+          <h2 class="text-2xl font-bold text-gray-900">{{ t.title }}</h2>
+          <div class="flex gap-2">
+            <a [routerLink]="['/tasks', t.id, 'edit']"
+               class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">edit</span>
+              Edit
+            </a>
+            <button (click)="deleteTask()"
+                    class="px-3 py-1.5 border border-red-200 text-red-600 rounded-lg text-sm hover:bg-red-50 flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">delete</span>
+              Delete
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8">
+          <div>
+            <span class="block text-xs text-gray-400 uppercase tracking-wider mb-1">Status</span>
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm"
+                  [class.bg-green-100]="t.completed" [class.text-green-700]="t.completed"
+                  [class.bg-blue-100]="!t.completed" [class.text-blue-700]="!t.completed">
+              {{ t.completed ? 'Completed' : 'In Progress' }}
+            </span>
+          </div>
+          <div>
+            <span class="block text-xs text-gray-400 uppercase tracking-wider mb-1">Due Date</span>
+            <span class="text-sm text-gray-800">{{ t.dueDate }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <span class="block text-xs text-gray-400 uppercase tracking-wider mb-4">Assignee</span>
+        @if (t.user) {
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-semibold">
+              {{ t.user.name?.charAt(0) }}
+            </div>
+            <div>
+              <p class="font-medium text-gray-900">{{ t.user.name }}</p>
+              <p class="text-sm text-gray-500">{{ t.user.email }}</p>
+            </div>
+          </div>
+        } @else {
+          <p class="text-sm text-gray-400">Unassigned</p>
+        }
+      </div>
+    </div>
+  </div>
+} @else {
+  <p class="text-gray-500">Loading...</p>
+}
