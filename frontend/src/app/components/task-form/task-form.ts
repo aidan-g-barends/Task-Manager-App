@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../services/task';
+import { UserService, User } from '../../services/user';
 
 @Component({
   selector: 'app-task-form',
@@ -12,10 +13,12 @@ import { TaskService } from '../../services/task';
 export class TaskForm implements OnInit {
   form: FormGroup;
   private taskId: number | null = null;
+  protected readonly users = signal<User[]>([]);
 
   constructor(
     private fb: FormBuilder,
     private taskService: TaskService,
+    private userService: UserService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -23,10 +26,13 @@ export class TaskForm implements OnInit {
       title: ['', Validators.required],
       dueDate: ['', Validators.required],
       completed: [false],
+      userId: [''],
     });
   }
 
   ngOnInit(): void {
+    this.userService.getAll().subscribe((data) => this.users.set(data));
+
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
       this.taskId = Number(idParam);
@@ -35,6 +41,7 @@ export class TaskForm implements OnInit {
           title: task.title,
           dueDate: task.dueDate,
           completed: task.completed,
+          userId: task.user?.id ?? '',
         });
       });
     }
@@ -45,12 +52,18 @@ export class TaskForm implements OnInit {
       return;
     }
 
+    const { userId, ...rest } = this.form.value;
+    const payload = {
+      ...rest,
+      user: userId ? { id: Number(userId) } : null,
+    };
+
     if (this.taskId) {
-      this.taskService.update({ id: this.taskId, ...this.form.value }).subscribe(() => {
+      this.taskService.update({ id: this.taskId, ...payload }).subscribe(() => {
         this.router.navigate(['/']);
       });
     } else {
-      this.taskService.create(this.form.value).subscribe(() => {
+      this.taskService.create(payload).subscribe(() => {
         this.form.reset({ completed: false });
         this.router.navigate(['/']);
       });
