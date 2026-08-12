@@ -8,6 +8,7 @@ import ac.za.mycput.taskmanager.Service.impl.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserService implements IUserService {
 
     private UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public UserService(UserRepository userRepository){
@@ -25,7 +27,8 @@ public class UserService implements IUserService {
     @Override
     public User create(User user) {
 
-        User newUser = UserFactory.createUser(user.getName(), user.getEmail(), null);
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        User newUser = UserFactory.createUser(user.getName(), user.getEmail(), hashedPassword, null);
         return userRepository.save(newUser);
     }
 
