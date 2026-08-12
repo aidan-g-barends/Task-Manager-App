@@ -4,6 +4,13 @@
     <p class="text-sm text-gray-500 mt-1">Manage and track project deliverables.</p>
   </div>
 
+  <div class="relative mb-4">
+    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
+    <input type="text" placeholder="Search tasks..."
+           (input)="onSearchChange($any($event.target).value)"
+           class="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-500" />
+  </div>
+
   <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
     @for (task of tasks(); track task.id) {
       <div class="flex items-center gap-4 p-4 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors">

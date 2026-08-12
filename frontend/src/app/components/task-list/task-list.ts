@@ -12,12 +12,18 @@ import { RouterLink } from '@angular/router';
 export class TaskList implements OnInit {
   private readonly allTasks = signal<Task[]>([]);
   private readonly completedOnly = signal<boolean>(false);
+  protected readonly searchTerm = signal<string>('');
 
-  protected readonly tasks = computed(() =>
-    this.completedOnly()
+  protected readonly tasks = computed(() => {
+    const base = this.completedOnly()
       ? this.allTasks().filter((t) => t.completed)
-      : this.allTasks()
-  );
+      : this.allTasks();
+
+    const term = this.searchTerm().toLowerCase().trim();
+    if (!term) return base;
+
+    return base.filter((t) => t.title.toLowerCase().includes(term));
+  });
 
   protected readonly heading = computed(() =>
     this.completedOnly() ? 'Completed Tasks' : 'All Tasks'
@@ -34,6 +40,10 @@ export class TaskList implements OnInit {
     this.taskService.getAll().subscribe((data) => {
       this.allTasks.set(data);
     });
+  }
+
+  onSearchChange(value: string): void {
+    this.searchTerm.set(value);
   }
 
   toggleComplete(task: Task): void {
