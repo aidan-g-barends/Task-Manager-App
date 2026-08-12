@@ -33,6 +33,7 @@ class UserServiceTest {
         User incoming = new User.Builder()
                 .setName("Aidan")
                 .setEmail("aidan@example.com")
+                .setPassword("TestPass123!")
                 .build();
 
         Mockito.when(userRepository.save(Mockito.any(User.class)))
