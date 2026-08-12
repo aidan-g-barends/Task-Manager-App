@@ -32,7 +32,8 @@ class UserControllerTest {
         String requestBody = """
                 {
                     "name": "Test User",
-                    "email": "test@email.com"
+                    "email": "test@email.com",
+                    "password": "TestPass123!"
                 }
                 """;
 
@@ -49,7 +50,8 @@ class UserControllerTest {
         String requestBody = """
             {
                 "name": "Read Test User",
-                "email": "readtest@example.com"
+                "email": "readtest@example.com",
+                "password": "TestPass123!"
             }
             """;
 
@@ -77,7 +79,8 @@ class UserControllerTest {
         String createBody = """
             {
                 "name": "Original Name",
-                "email": "original@example.com"
+                "email": "original@example.com",
+                "password": "TestPass123!"
             }
             """;
 
@@ -109,7 +112,8 @@ class UserControllerTest {
         String requestBody = """
             {
                 "name": "Delete Me",
-                "email": "deleteme@example.com"
+                "email": "deleteme@example.com",
+                "password": "TestPass123!"
             }
             """;
 
@@ -134,7 +138,8 @@ class UserControllerTest {
         String createBody = """
             {
                 "name": "Email Search User",
-                "email": "findme@example.com"
+                "email": "findme@example.com",
+                "password": "TestPass123!"
             }
             """;
 
@@ -152,7 +157,8 @@ class UserControllerTest {
         String createBody = """
             {
                 "name": "Search By Name",
-                "email": "searchbyname@example.com"
+                "email": "searchbyname@example.com",
+                "password": "TestPass123!"
             }
             """;
 

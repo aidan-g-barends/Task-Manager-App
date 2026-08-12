@@ -26,7 +26,8 @@ class TaskControllerTest {
         String body = String.format("""
                 {
                     "name": "%s",
-                    "email": "%s"
+                    "email": "%s",
+                    "password": "TestPass123!"
                 }
                 """, name, email);
 
