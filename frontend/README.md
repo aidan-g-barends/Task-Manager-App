@@ -1,59 +1,49 @@
-# Frontend
+# Task Manager App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.19.
+A full-stack task management application built with Angular (frontend) and Spring Boot (backend), backed by PostgreSQL.
 
-## Development server
+## Overview
 
-To start a local development server, run:
+Task Manager App lets you create, track, and organize tasks in a clean, single-page workspace. It's built as a learning/portfolio project, developed feature-by-feature with an emphasis on real debugging discipline — using console and network evidence to diagnose issues rather than guessing.
 
-```bash
-ng serve
+## Tech Stack
+
+**Frontend**
+- Angular (standalone components, signals-based state)
+- Reactive Forms
+- Angular Router
+
+**Backend**
+- Spring Boot
+- Spring Data JPA / Hibernate
+- PostgreSQL
+
+## Features
+
+- **Task management** — create, view, edit, and delete tasks with a title and due date
+- **Mark tasks complete** — toggle completion status directly from the task list
+- **All Tasks / Completed views** — filter tasks by completion status via dedicated routes
+- **Search** — filter the visible task list by title in real time
+- **Notifications** — a dropdown in the top nav surfaces tasks that are due today, due soon, or overdue, with relative labels (e.g. "Due in 2 days", "Overdue by 1 day") and a badge count
+- **Task detail & edit views** — view and update individual tasks via their own routes
+- **User list** — view registered users in the workspace
+- **Client-side routing** — distinct URLs for All Tasks, Completed, Users, and task creation/editing, with active-link highlighting in the sidebar
+
+## Project Status
+
+This is an actively developed project. Current focus areas and known gaps:
+
+- **My Tasks** — planned feature to filter tasks by assignee; requires a proper authentication system (login, current-user context) and task-assignment UI, both not yet built
+- **Auth** — no login/session system exists yet; all data is currently unscoped to any particular user
+
+## Project Structure
+
+```
+task-manager/
+├── frontend/     # Angular application
+└── backend/      # Spring Boot application
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Development Notes
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project has been built incrementally, with each feature scoped, implemented, and verified against real console/network evidence before moving to the next. Roadmap and known issues are tracked in the project roadmap doc.
