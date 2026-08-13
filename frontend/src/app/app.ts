@@ -1,5 +1,5 @@
 import { Component, signal, computed, OnInit } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
 import { TaskService, Task } from './services/task';
 
 interface TaskNotification {
@@ -18,8 +18,9 @@ export class App implements OnInit {
 
   private readonly allTasks = signal<Task[]>([]);
   protected readonly showNotifications = signal(false);
+  protected readonly isAuthPage = signal(false);
 
-  private readonly daysAhead = 3; // show tasks due within the next 3 days too
+  private readonly daysAhead = 3;
 
   protected readonly notifications = computed<TaskNotification[]>(() => {
     const today = new Date();
@@ -41,7 +42,13 @@ export class App implements OnInit {
       }));
   });
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isAuthPage.set(event.urlAfterRedirects.startsWith('/login'));
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.taskService.getAll().subscribe((data) => this.allTasks.set(data));
