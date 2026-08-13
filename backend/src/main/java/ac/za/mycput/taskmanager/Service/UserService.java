@@ -29,7 +29,13 @@ public class UserService implements IUserService {
 
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         User newUser = UserFactory.createUser(user.getName(), user.getEmail(), hashedPassword, null);
-        return userRepository.save(newUser);
+        User saved = userRepository.save(newUser);
+
+        return new User.Builder()
+                .setId(saved.getId())
+                .setName(saved.getName())
+                .setEmail(saved.getEmail())
+                .build();
     }
 
     @Override
