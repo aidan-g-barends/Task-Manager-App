@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user';
@@ -12,6 +12,7 @@ import { UserService } from '../../services/user';
 export class UserForm implements OnInit {
   form: FormGroup;
   private userId: number | null = null;
+  protected readonly isEditMode = signal(false);
 
   constructor(
     private fb: FormBuilder,
@@ -22,6 +23,7 @@ export class UserForm implements OnInit {
     this.form = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      password: [''],
     });
   }
 
@@ -29,12 +31,16 @@ export class UserForm implements OnInit {
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
       this.userId = Number(idParam);
+      this.isEditMode.set(true);
       this.userService.getById(this.userId).subscribe((user) => {
         this.form.patchValue({
           name: user.name,
           email: user.email,
         });
       });
+    } else {
+      this.form.get('password')?.setValidators(Validators.required);
+      this.form.get('password')?.updateValueAndValidity();
     }
   }
 
@@ -44,7 +50,8 @@ export class UserForm implements OnInit {
     }
 
     if (this.userId) {
-      this.userService.update({ id: this.userId, ...this.form.value }).subscribe(() => {
+      const { password, ...rest } = this.form.value;
+      this.userService.update({ id: this.userId, ...rest }).subscribe(() => {
         this.router.navigate(['/users']);
       });
     } else {
