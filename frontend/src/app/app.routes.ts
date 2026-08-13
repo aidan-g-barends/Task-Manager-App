@@ -5,15 +5,16 @@ import { TaskDetail } from './components/task-detail/task-detail';
 import { UserList } from './components/user-list/user-list';
 import { UserForm } from './components/user-form/user-form';
 import { Login } from './components/login/login';
+import { authGuard } from './auth-guard';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
-  { path: '', component: TaskList },
-  { path: 'completed', component: TaskList, data: { completedOnly: true } },
-  { path: 'tasks/new', component: TaskForm },
-  { path: 'tasks/:id', component: TaskDetail },
-  { path: 'tasks/:id/edit', component: TaskForm },
-  { path: 'users', component: UserList },
-  { path: 'users/new', component: UserForm },
-  { path: 'users/:id/edit', component: UserForm },
+  { path: '', component: TaskList, canActivate: [authGuard] },
+  { path: 'completed', component: TaskList, data: { completedOnly: true }, canActivate: [authGuard] },
+  { path: 'tasks/new', component: TaskForm, canActivate: [authGuard] },
+  { path: 'tasks/:id', component: TaskDetail, canActivate: [authGuard] },
+  { path: 'tasks/:id/edit', component: TaskForm, canActivate: [authGuard] },
+  { path: 'users', component: UserList, canActivate: [authGuard] },
+  { path: 'users/new', component: UserForm, canActivate: [authGuard] },
+  { path: 'users/:id/edit', component: UserForm, canActivate: [authGuard] },
 ];
