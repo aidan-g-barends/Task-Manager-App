@@ -1,6 +1,7 @@
 import { Component, signal, computed, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
 import { TaskService, Task } from './services/task';
+import { AuthService } from './services/auth';
 
 interface TaskNotification {
   task: Task;
@@ -18,7 +19,9 @@ export class App implements OnInit {
 
   private readonly allTasks = signal<Task[]>([]);
   protected readonly showNotifications = signal(false);
+  protected readonly showUserMenu = signal(false);
   protected readonly isAuthPage = signal(false);
+  protected currentUser;
 
   private readonly daysAhead = 3;
 
@@ -42,7 +45,8 @@ export class App implements OnInit {
       }));
   });
 
-  constructor(private taskService: TaskService, private router: Router) {
+  constructor(private taskService: TaskService, private router: Router, private authService: AuthService) {
+    this.currentUser = this.authService.user;
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.isAuthPage.set(event.urlAfterRedirects.startsWith('/login'));
@@ -56,6 +60,15 @@ export class App implements OnInit {
 
   toggleNotifications(): void {
     this.showNotifications.update((v) => !v);
+  }
+
+  toggleUserMenu(): void {
+    this.showUserMenu.update((v) => !v);
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   private formatDueLabel(diffDays: number): string {
