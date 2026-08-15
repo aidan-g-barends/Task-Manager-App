@@ -18,6 +18,9 @@ public class User {
     @NotBlank(message = "Password cannot be blank")
     private String password;
 
+    @NotBlank(message = "Role cannot be blank")
+    private String role;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,6 +31,7 @@ public class User {
         this.name = builder.name;
         this.email = builder.email;
         this.password = builder.password;
+        this.role = builder.role;
         this.id = builder.id;
     }
 
@@ -41,6 +45,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public Long getId() {
@@ -59,6 +67,10 @@ public class User {
         this.password = password;
     }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -73,6 +85,7 @@ public class User {
         private String name;
         private String email;
         private String password;
+        private String role;
         private Long id;
 
         public Builder setName(String name) {
@@ -90,6 +103,11 @@ public class User {
             return this;
         }
 
+        public Builder setRole(String role) {
+            this.role = role;
+            return this;
+        }
+
         public Builder setId(Long id) {
             this.id = id;
             return this;
@@ -99,6 +117,7 @@ public class User {
             this.name = user.getName();
             this.email = user.getEmail();
             this.password = user.getPassword();
+            this.role = user.getRole();
             this.id = user.getId();
 
             return this;

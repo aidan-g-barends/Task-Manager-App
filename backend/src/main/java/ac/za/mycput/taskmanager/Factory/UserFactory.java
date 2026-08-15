@@ -20,6 +20,7 @@ public class UserFactory {
                 .setName(name)
                 .setEmail(email)
                 .setPassword(password)
+                .setRole("USER")
                 .setId(id)
                 .build();
 
