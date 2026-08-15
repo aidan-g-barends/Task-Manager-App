@@ -11,6 +11,7 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: '', component: TaskList, canActivate: [authGuard] },
   { path: 'completed', component: TaskList, data: { completedOnly: true }, canActivate: [authGuard] },
+  { path: 'my-tasks', component: TaskList, data: { myTasksOnly: true }, canActivate: [authGuard] },
   { path: 'tasks/new', component: TaskForm, canActivate: [authGuard] },
   { path: 'tasks/:id', component: TaskDetail, canActivate: [authGuard] },
   { path: 'tasks/:id/edit', component: TaskForm, canActivate: [authGuard] },
