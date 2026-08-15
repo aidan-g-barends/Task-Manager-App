@@ -2,6 +2,7 @@ package ac.za.mycput.taskmanager.Controller;
 
 import ac.za.mycput.taskmanager.Domain.User;
 import ac.za.mycput.taskmanager.Repository.UserRepository;
+import ac.za.mycput.taskmanager.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
-    public AuthController(UserRepository userRepository) {
+    public AuthController(UserRepository userRepository, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/login")
@@ -28,12 +31,16 @@ public class AuthController {
             return ResponseEntity.status(401).body("Invalid email or password");
         }
 
-        User safeUser = new User.Builder()
-                .setId(user.getId())
-                .setName(user.getName())
-                .setEmail(user.getEmail())
-                .build();
+        String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole());
 
-        return ResponseEntity.ok(safeUser);
+        LoginResponse response = new LoginResponse(
+                token,
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getRole()
+        );
+
+        return ResponseEntity.ok(response);
     }
 }
