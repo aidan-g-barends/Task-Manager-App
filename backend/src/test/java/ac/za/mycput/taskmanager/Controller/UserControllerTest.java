@@ -33,7 +33,8 @@ class UserControllerTest {
                 {
                     "name": "Test User",
                     "email": "test@email.com",
-                    "password": "TestPass123!"
+                    "password": "TestPass123!",
+                    "role": "USER"
                 }
                 """;
 
@@ -51,7 +52,8 @@ class UserControllerTest {
             {
                 "name": "Read Test User",
                 "email": "readtest@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!",
+                "role": "USER"
             }
             """;
 
@@ -80,7 +82,8 @@ class UserControllerTest {
             {
                 "name": "Original Name",
                 "email": "original@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!",
+                "role": "USER"
             }
             """;
 
@@ -113,7 +116,8 @@ class UserControllerTest {
             {
                 "name": "Delete Me",
                 "email": "deleteme@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!",
+                "role": "USER"
             }
             """;
 
@@ -139,7 +143,8 @@ class UserControllerTest {
             {
                 "name": "Email Search User",
                 "email": "findme@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!",
+                "role": "USER"
             }
             """;
 
@@ -158,7 +163,8 @@ class UserControllerTest {
             {
                 "name": "Search By Name",
                 "email": "searchbyname@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!",
+                "role": "USER"
             }
             """;
 

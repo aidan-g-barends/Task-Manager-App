@@ -27,7 +27,8 @@ class TaskControllerTest {
                 {
                     "name": "%s",
                     "email": "%s",
-                    "password": "TestPass123!"
+                    "password": "TestPass123!",
+                    "role": "USER"
                 }
                 """, name, email);
 
