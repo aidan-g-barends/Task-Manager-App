@@ -3,12 +3,14 @@ package ac.za.mycput.taskmanager.Controller;
 import ac.za.mycput.taskmanager.Domain.Task;
 import ac.za.mycput.taskmanager.Service.TaskService;
 import ac.za.mycput.taskmanager.Service.impl.ITaskService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,8 +38,22 @@ public class TaskController {
     }
 
     @PutMapping("/update")
-    public Task update(@RequestBody Task task){
-        return taskService.update(task);
+    public ResponseEntity<?> update(@RequestBody Task task, HttpServletRequest request){
+        String role = (String) request.getAttribute("role");
+        Long userId = (Long) request.getAttribute("userId");
+
+        if (role == null) {
+            return ResponseEntity.status(401).body("Unauthorized");
+        }
+
+        if (role.equals("USER")) {
+            Task existing = taskService.read(task.getId());
+            if (existing.getUser() == null || !existing.getUser().getId().equals(userId)) {
+                return ResponseEntity.status(403).body("You can only edit your own tasks");
+            }
+        }
+
+        return ResponseEntity.ok(taskService.update(task));
     }
 
     @DeleteMapping("/delete/{id}")
