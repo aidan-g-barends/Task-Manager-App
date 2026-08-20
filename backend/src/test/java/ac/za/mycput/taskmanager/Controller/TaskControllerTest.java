@@ -40,6 +40,23 @@ class TaskControllerTest {
         return objectMapper.readTree(response).get("id").asLong();
     }
 
+    // Helper: logs in and returns a real JWT
+    private String loginAndGetToken(String email, String password) throws Exception {
+        String body = String.format("""
+                {
+                    "email": "%s",
+                    "password": "%s"
+                }
+                """, email, password);
+
+        String response = mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body))
+                .andReturn().getResponse().getContentAsString();
+
+        return objectMapper.readTree(response).get("token").asText();
+    }
+
     @Test
     void create() throws Exception {
         Long userId = createUser("Task Owner", "owner@example.com");
@@ -109,13 +126,17 @@ class TaskControllerTest {
 
     @Test
     void updates() throws Exception {
-        String createBody = """
+        Long userId = createUser("Update Owner", "updateowner@example.com");
+        String token = loginAndGetToken("updateowner@example.com", "TestPass123!");
+
+        String createBody = String.format("""
                 {
                     "title": "Original Title",
                     "completed": false,
-                    "dueDate": "2026-12-01"
+                    "dueDate": "2026-12-01",
+                    "user": { "id": %d }
                 }
-                """;
+                """, userId);
 
         String response = mockMvc.perform(post("/api/task/create")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -134,6 +155,7 @@ class TaskControllerTest {
                 """, id);
 
         mockMvc.perform(put("/api/task/update")
+                        .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updateBody))
                 .andExpect(status().isOk())
